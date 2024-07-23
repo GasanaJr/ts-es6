@@ -2,6 +2,7 @@ import UserModel from "../models/UserModel";
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 import { generateToken } from "../helpers/token";
+import { IUserRequest } from "../interfaces/request";
 
 
 const createUser = async (req: Request, res: Response): Promise<void> => {
@@ -52,8 +53,8 @@ const loginUser = async(req:Request, res: Response): Promise<void> => {
 
 }
 
-const adminData = (req: Request,res: Response): void => {
-  res.send("Admin data");
+const adminData = (req: IUserRequest,res: Response): void => {
+  res.send(`Admin data ${JSON.stringify(req.user)}`);
   return;
 }
 
