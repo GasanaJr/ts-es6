@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 import { Request, Response } from "express";
 import { generateToken } from "../helpers/token";
 
+
 const createUser = async (req: Request, res: Response): Promise<void> => {
   const { email, password, name } = req.body;
   if (!email || !password || !name) {
@@ -51,4 +52,9 @@ const loginUser = async(req:Request, res: Response): Promise<void> => {
 
 }
 
-export { createUser, loginUser };
+const adminData = (req: Request,res: Response): void => {
+  res.send("Admin data");
+  return;
+}
+
+export { createUser, loginUser, adminData };
