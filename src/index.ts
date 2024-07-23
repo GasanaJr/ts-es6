@@ -9,7 +9,7 @@ app.use(express.json());
 
 // Await db connection
 try {
-  mongoose.connect(process.env.DB_URL).then(() => {
+  mongoose.connect(process.env.DB_URL!).then(() => {
     console.log("DB connected Successfully");
   });
 } catch (error) {
