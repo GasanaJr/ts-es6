@@ -29,4 +29,21 @@ const createUser = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-export { createUser };
+const loginUser = async(req:Request, res: Response): Promise<void> => {
+  const {email, password} = req.body;
+  const dbemail = await UserModel.findOne({email: email});
+  if (!dbemail) {
+    res.status(400).json({
+      message: "The Email entered does not exist in the database"
+    });
+    return
+  }
+  const passMatch = await bcrypt.compare(password,dbemail.password);
+  if (passMatch){res.status(200).json({message: "User Logged Successfully"}); return}
+    
+  res.status(400).json({message: "Email or Password Incorrect"});
+  
+
+}
+
+export { createUser, loginUser };
