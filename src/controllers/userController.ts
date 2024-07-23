@@ -1,6 +1,7 @@
 import UserModel from "../models/UserModel";
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
+import { generateToken } from "../helpers/token";
 
 const createUser = async (req: Request, res: Response): Promise<void> => {
   const { email, password, name } = req.body;
@@ -39,7 +40,11 @@ const loginUser = async(req:Request, res: Response): Promise<void> => {
     return
   }
   const passMatch = await bcrypt.compare(password,dbemail.password);
-  if (passMatch){res.status(200).json({message: "User Logged Successfully"}); return}
+  if (passMatch){
+    const token: string = generateToken(dbemail);
+    res.status(200).json({message: "User Logged Successfully", token: token}); 
+    return
+  }
     
   res.status(400).json({message: "Email or Password Incorrect"});
   
